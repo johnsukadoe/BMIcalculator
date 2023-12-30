@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>BMI Calculator</title>
+</head>
+<body>
+  <h1>BMI Calculator</h1>
+
+  <form action="/calculator" method="post">
+    <label for="weight">Weight (kg):</label>
+    <input type="text" id="weight" name="weight" required>
+    <br>
+
+    <label for="height">Height (cm):</label> <!-- Change 'm' to 'cm' in the label -->
+    <input type="text" id="height" name="height" required>
+    <br>
+
+    <button type="submit">Calculate BMI</button>
+</form>
+
+</body>
+</html>
