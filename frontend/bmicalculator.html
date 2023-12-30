@@ -6,20 +6,89 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <title>BMI Calculator</title>
 </head>
-<body>
-  <h1>BMI Calculator</h1>
+  
+<body style="background-color:#7396ae;" class="text-white min-h-screen">
+    <header class="bg-gray-50 text-black text-xl p-6">
+        <ul class="flex gap-6">
+            <li><a href="/">Main Page</a></li>
+            <li><p class="underline">BMI Calculator</p></li>
+            <li><a href="https://github.com/johnsukadoe/BMIcalculator">Github REP</a></li>
+        </ul>
+    </header>
+  
+    <main class="flex flex-col justify-center items-center m-14 flex-1">
+        <h1 class="text-3xl font-bold mb-4">BMI Calculator</h1>
+    
+        <form id="bmiForm" action="/calculator" method="post" class="bg-gray-100 p-8 rounded-md shadow-md text-black">
+            <div class="mb-4">
+                <label for="weight" class="block text-gray-700 text-sm font-bold mb-2">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500">
+            </div>
+        
+            <div class="mb-6">
+                <label for="height" class="block text-gray-700 text-sm font-bold mb-2">Height (cm):</label>
+                <input type="number" id="height" name="height" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500">
+            </div>
+        
+            <button type="submit"
+                class="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:shadow-outline-indigo">
+                Calculate BMI
+            </button>
+        </form>
+        
+        <div id="resultContainer" class="hidden mt-4">
+            <h2 class="text-xl font-bold mb-2">BMI Results</h2>
+            <p id="bmiResult"></p>
+        </div>
+    </main>
+    
 
-  <form action="/calculator" method="post">
-    <label for="weight">Weight (kg):</label>
-    <input type="text" id="weight" name="weight" required>
-    <br>
+    <footer class="bg-gray-800 text-white text-xl p-6 flex gap-10">
+        <h2>Miras Shynar SE-2206</h2>
+        <ul class="flex gap-6">
+            <li><a href="/">Main Page</a></li>
+            <li><p class="underline">BMI Calculator</p></li>
+            <li><a href="https://github.com/johnsukadoe/BMIcalculator">Github REP</a></li>
+        </ul>
+    </footer>
+    <script>
+        document.getElementById('bmiForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    <label for="height">Height (cm):</label> <!-- Change 'm' to 'cm' in the label -->
-    <input type="text" id="height" name="height" required>
-    <br>
+    const weight = document.getElementById('weight').value;
+    const height = document.getElementById('height').value;
 
-    <button type="submit">Calculate BMI</button>
-</form>
+    const data = {
+        weight,
+        height
+    };
 
+    fetch('/calculator', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultContainer = document.getElementById('resultContainer');
+        const bmiResult = document.getElementById('bmiResult');
+
+        if (data.error) {
+            resultContainer.classList.add('hidden');
+            alert(data.error);
+        } else {
+            resultContainer.classList.remove('hidden');
+            bmiResult.textContent = `Your BMI is: ${data.bmi}`;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+
+    </script>
 </body>
 </html>

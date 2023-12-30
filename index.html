@@ -9,7 +9,7 @@
   <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
   <title>Your Tailwind CSS Project</title>
 </head>
-<body style="background-color:#7396ae;" class="text-white">
+<body style="background-color:#7396ae;" class="text-white min-h-screen">
     <header class="bg-gray-50 text-black text-xl p-6">
         <ul class="flex gap-6">
             <li><p class="underline">Main Page</p></li>
@@ -18,32 +18,35 @@
         </ul>
     </header>
   
-    <main class="flex justify-center m-14">
-        <div class="w-2/3 flex flex-col align-top justify-center">
+    <main class="flex flex-col justify-center items-center m-14 flex-1">
+        <div class="w-2/3 flex flex-col">
             <h1 class="text-5xl">Your BMI Calculator</h1>
             <p class="text-2xl mt-8">Body Mass Index (BMI) is a person's weight in kilograms (or pounds) divided by the square of height in meters (or feet). A high BMI can indicate high body fatness. BMI screens for weight categories that may lead to health problems, but it does not diagnose the body fatness or health of an individual.
             </p>
-            <a href="/calculator" class="bg-black p-2 rounded">Calculate your BMI</a>
+            <div class="flex mt-4">
+                <a href="/calculator" class="bg-blue-800 p-2 rounded max-w-xs ">Calculate your BMI</a>
+            </div>
         </div>
+        
         <div id="chartdiv" class="w-2/3 h-96"></div>
     </main>
 
-    <footer>
-
+    <footer class="bg-gray-800 text-white text-xl p-6 flex gap-10">
+        <h2>Miras Shynar SE-2206</h2>
+        <ul class="flex flex-col gap-6">
+            <li><p class="underline">Main Page</p></li>
+            <li><a href="/calculator">BMI Calculator</a></li>
+            <li><a href="https://github.com/johnsukadoe/BMIcalculator">Github REP</a></li>
+        </ul>
     </footer>
 
     <script>
-        // Create chart instance
         am4core.ready(function() {
-            // Themes begin
             am4core.useTheme(am4themes_animated);
-            // Themes end
 
-            // Create chart
             var chart = am4core.create("chartdiv", am4charts.XYChart);
             chart.padding(40, 40, 40, 40);
 
-            // Add data
             chart.data = [{
                 "category": "Underweight",
                 "value": 18.5
@@ -58,7 +61,6 @@
                 "value": 40
             }];
 
-            // Create axes
             var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
@@ -66,7 +68,6 @@
 
             var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-            // Create series
             var series = chart.series.push(new am4charts.ColumnSeries());
             series.dataFields.valueY = "value";
             series.dataFields.categoryX = "category";
@@ -76,13 +77,12 @@
             series.columns.template.column.cornerRadiusTopRight = 10;
             series.columns.template.column.cornerRadiusTopLeft = 10;
 
-            // Add label
             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
             labelBullet.label.text = "{valueY}%";
             labelBullet.label.dy = -20;
 
             chart.cursor = new am4charts.XYCursor();
-        }); // end am4core.ready()
+        }); 
     </script>
     
 </body>
